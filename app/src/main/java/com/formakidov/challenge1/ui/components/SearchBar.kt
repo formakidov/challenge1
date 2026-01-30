@@ -43,7 +43,6 @@ fun SearchBar(
                 color = Color.White,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(52.dp)
                     .border(
                         width = 1.dp,
                         color = Color(0xFFE5E5EA),

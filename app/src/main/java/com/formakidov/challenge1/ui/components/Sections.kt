@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.formakidov.challenge1.ui.screens.list.ListSection
 import com.formakidov.challenge1.ui.theme.Typography
 
@@ -32,8 +31,7 @@ fun SectionHeader(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
-            .padding(horizontal = 20.dp, vertical = 8.dp),
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -69,7 +67,7 @@ private fun SectionTab(
         verticalAlignment = Alignment.Top,
         modifier = Modifier.clickable(
             interactionSource = interactionSource,
-            indication = null, 
+            indication = null,
             onClick = onClick
         )
     ) {
@@ -82,9 +80,9 @@ private fun SectionTab(
 
         Box(
             modifier = Modifier
-                .padding(5.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFE5E5EA)),
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFFE5E5EA))
+                .padding(start = 5.dp, top = 5.dp, end = 5.dp, bottom = 4.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(

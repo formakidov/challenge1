@@ -46,30 +46,34 @@ fun AlbumListScreen(
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val currentSection by viewModel.currentSection.collectAsStateWithLifecycle()
 
+    AlbumListContent(
+        uiState = uiState,
+        searchQuery = searchQuery,
+        currentSection = currentSection,
+        onSearchQueryChange = viewModel::onSearchQueryChanged,
+        onSectionChange = viewModel::onSectionChanged,
+        onAlbumClick = onAlbumClick,
+        onToggleSave = viewModel::toggleSave
+    )
+}
+
+@Composable
+fun AlbumListContent(
+    uiState: AlbumListUiState,
+    searchQuery: String,
+    currentSection: ListSection,
+    onSearchQueryChange: (String) -> Unit,
+    onSectionChange: (ListSection) -> Unit,
+    onAlbumClick: (Album) -> Unit,
+    onToggleSave: (Album) -> Unit
+) {
     Scaffold(
         containerColor = Color(0xFFF2F2F7),
         topBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFFF2F2F7))
-                    .statusBarsPadding()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp)
-            ) {
-                Text(
-                    text = "Apple Music: Albums",
-                    style = Typography.displayLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                SearchBar(
-                    query = searchQuery,
-                    onQueryChange = viewModel::onSearchQueryChanged
-                )
-            }
+            AlbumListTopBar(
+                searchQuery = searchQuery,
+                onSearchQueryChange = onSearchQueryChange
+            )
         },
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(WindowInsets.navigationBars)
     ) { padding ->
@@ -78,7 +82,7 @@ fun AlbumListScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            when (val state = uiState) {
+            when (uiState) {
                 is AlbumListUiState.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center),
@@ -87,19 +91,19 @@ fun AlbumListScreen(
                 }
                 is AlbumListUiState.Error -> {
                     Text(
-                        text = "Error: ${state.message}",
+                        text = "Error: ${uiState.message}",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 is AlbumListUiState.Success -> {
-                    AlbumListContent(
-                        featuredList = state.featuredAlbums,
-                        savedList = state.savedAlbums,
+                    AlbumList(
+                        featuredList = uiState.featuredAlbums,
+                        savedList = uiState.savedAlbums,
                         currentSection = currentSection,
-                        onSectionChange = viewModel::onSectionChanged,
+                        onSectionChange = onSectionChange,
                         onAlbumClick = onAlbumClick,
-                        onToggleSave = viewModel::toggleSave
+                        onToggleSave = onToggleSave
                     )
                 }
             }
@@ -108,7 +112,35 @@ fun AlbumListScreen(
 }
 
 @Composable
-fun AlbumListContent(
+private fun AlbumListTopBar(
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFF2F2F7))
+            .statusBarsPadding()
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp)
+    ) {
+        Text(
+            text = "Apple Music: Albums",
+            style = Typography.displayLarge,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SearchBar(
+            query = searchQuery,
+            onQueryChange = onSearchQueryChange
+        )
+    }
+}
+
+@Composable
+private fun AlbumList(
     featuredList: List<Album>,
     savedList: List<Album>,
     currentSection: ListSection,
@@ -121,7 +153,8 @@ fun AlbumListContent(
             currentSection = currentSection,
             featuredCount = featuredList.size,
             savedCount = savedList.size,
-            onSectionChange = onSectionChange
+            onSectionChange = onSectionChange,
+            modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 16.dp, bottom = 12.dp)
         )
 
         val albumsToShow = when (currentSection) {
@@ -132,7 +165,12 @@ fun AlbumListContent(
         val navBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
         LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 16.dp + navBottom),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                top = 0.dp,
+                end = 16.dp,
+                bottom = 16.dp + navBottom
+            ),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.fillMaxSize()
         ) {
@@ -149,18 +187,23 @@ fun AlbumListContent(
 
             if (albumsToShow.isEmpty()) {
                 item {
-                    Box(
-                        modifier = Modifier.fillParentMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = if (currentSection == ListSection.Saved) "No saved albums" else "No albums found",
-                            style = Typography.bodyMedium,
-                            color = Color.Gray
-                        )
-                    }
+                    EmptyState(currentSection)
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun EmptyState(currentSection: ListSection) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = if (currentSection == ListSection.Saved) "No saved albums" else "No albums found",
+            style = Typography.bodyMedium,
+            color = Color.Gray
+        )
     }
 }

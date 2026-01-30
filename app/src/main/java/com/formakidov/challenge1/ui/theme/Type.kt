@@ -38,6 +38,13 @@ val Typography = Typography(
         lineHeight = 28.sp,
         color = Color(0xFF000000)
     ),
+    titleSmall = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight(400),
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
+        color = Color(0xFF000000)
+    ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
