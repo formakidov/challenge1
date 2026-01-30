@@ -11,7 +11,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import java.io.File
@@ -45,9 +46,7 @@ val appModule = module {
             .create(AppleMusicApi::class.java)
     }
 
-    single { SavedAlbumManager(androidContext()) }
-
-    single { AlbumRepository(get(), get()) }
-
-    viewModel { AlbumListViewModel(get(), get()) }
+    singleOf(::SavedAlbumManager)
+    singleOf(::AlbumRepository)
+    viewModelOf(::AlbumListViewModel)
 }
