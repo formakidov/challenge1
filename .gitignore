@@ -1,0 +1,64 @@
+# Android Studio
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Kotlin
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Log files
+*.log
+
+# Keystore files
+*.jks
+*.keystore
+
+# Generated files
+/build
+/app/build
+
+# Local configuration files
+local.properties
+
+# Kapt
+/app/build/generated/source/kapt
+
+# Navigation
+/app/build/generated/source/navigation-args
+.idea/navEditor.xml
+
+# Databinding
+/app/build/generated/data_binding_base_class_source_out
+
+# Android Profiler
+*.hprof
+*..hprof
+*.ap_
+*.ap-
+*.as_
+*.as-
+*..as_
+*..as-
+
+# Google Services
+/app/google-services.json
+
+# Crashlytics
+/app/fabric.properties
