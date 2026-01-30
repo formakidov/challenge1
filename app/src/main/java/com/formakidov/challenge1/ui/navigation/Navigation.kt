@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.formakidov.challenge1.data.model.Album
-import com.formakidov.challenge1.ui.screens.detail.DetailScreen
+import com.formakidov.challenge1.ui.screens.detail.AlbumDetailScreen
 import com.formakidov.challenge1.ui.screens.list.AlbumListScreen
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -52,7 +52,7 @@ fun AppNavigation() {
             }
 
             if (album != null) {
-                DetailScreen(
+                AlbumDetailScreen(
                     album = album,
                     onBackClick = { navController.popBackStack() }
                 )

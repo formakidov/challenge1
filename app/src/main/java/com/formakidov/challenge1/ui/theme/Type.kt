@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// todo typography must be refactored a bit to setup defaults here and customs in-place
 val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -17,6 +18,13 @@ val Typography = Typography(
         color = Color(0xFF000000)
     ),
     headlineMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight(510),
+        fontSize = 32.sp,
+        lineHeight = 52.sp,
+        color = Color(0xFF141414)
+    ),
+    headlineSmall = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight(400),
         fontSize = 24.sp,
@@ -49,6 +57,6 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight(600),
         fontSize = 13.sp,
-        color = Color(0xFF414B57)
+        color = Color(0xFF000000)
     )
 )

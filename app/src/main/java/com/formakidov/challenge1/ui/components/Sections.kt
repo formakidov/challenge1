@@ -75,9 +75,8 @@ private fun SectionTab(
     ) {
         Text(
             text = text,
-            style = Typography.headlineMedium.copy(
-                color = textColor,
-                fontSize = 32.sp
+            style = Typography.headlineSmall.copy(
+                color = textColor
             )
         )
 
@@ -90,11 +89,7 @@ private fun SectionTab(
         ) {
             Text(
                 text = count.toString(),
-                style = Typography.labelSmall.copy(
-                    fontSize = 12.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
+                style = Typography.labelSmall
             )
         }
     }
