@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.formakidov.challenge1.ui.theme.ArrowIconBackground
 
 @Composable
 fun AlbumImage(
@@ -46,7 +47,7 @@ fun AlbumImage(
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 shape = RoundedCornerShape(imageRadius),
-                color = Color(0xFFF2F2F7)
+                color = ArrowIconBackground
             ) {
                 AsyncImage(
                     model = url,

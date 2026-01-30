@@ -16,10 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.formakidov.challenge1.ui.screens.list.ListSection
+import com.formakidov.challenge1.ui.theme.SectionTabCountBackground
+import com.formakidov.challenge1.ui.theme.SectionTabTextUnselected
 import com.formakidov.challenge1.ui.theme.Typography
 
 @Composable
@@ -60,7 +61,7 @@ private fun SectionTab(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
-    val textColor = if (isSelected) Color.Black else Color(0xFF8E8E93)
+    val textColor = if (isSelected) Color.Black else SectionTabTextUnselected
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
@@ -81,7 +82,7 @@ private fun SectionTab(
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(24.dp))
-                .background(Color(0xFFE5E5EA))
+                .background(SectionTabCountBackground)
                 .padding(start = 5.dp, top = 5.dp, end = 5.dp, bottom = 4.dp),
             contentAlignment = Alignment.Center
         ) {

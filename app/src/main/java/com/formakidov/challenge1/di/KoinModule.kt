@@ -1,5 +1,6 @@
 package com.formakidov.challenge1.di
 
+import android.content.Context
 import com.formakidov.challenge1.data.api.AppleMusicApi
 import com.formakidov.challenge1.data.local.SavedAlbumManager
 import com.formakidov.challenge1.data.repository.AlbumRepository
@@ -17,36 +18,50 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import java.io.File
 
-val appModule = module {
+private val networkModule = module {
+    single { provideJson() }
+    single { provideOkHttpClient(androidContext()) }
+    single { provideRetrofit(get(), get()) }
+    single { provideAppleApi(get()) }
+}
 
-    single {
-        Json {
-            ignoreUnknownKeys = true
-            coerceInputValues = true
-        }
-    }
-
-    single {
-        val cacheSize = 10 * 1024 * 1024L
-        val cache = Cache(File(androidContext().cacheDir, "http_cache"), cacheSize)
-
-        OkHttpClient.Builder()
-            .cache(cache)
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
-            .build()
-    }
-
-    single {
-        val contentType = "application/json".toMediaType()
-        Retrofit.Builder()
-            .baseUrl("https://rss.marketingtools.apple.com/")
-            .client(get())
-            .addConverterFactory(get<Json>().asConverterFactory(contentType))
-            .build()
-            .create(AppleMusicApi::class.java)
-    }
-
+private val dataModule = module {
     singleOf(::SavedAlbumManager)
     singleOf(::AlbumRepository)
+}
+
+private val uiModule = module {
     viewModelOf(::AlbumListViewModel)
+}
+
+val appModule = module {
+    includes(networkModule, dataModule, uiModule)
+}
+
+private fun provideJson(): Json = Json {
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+}
+
+private fun provideOkHttpClient(context: Context): OkHttpClient {
+    val cacheSize = 10 * 1024 * 1024L
+    val cache = Cache(File(context.cacheDir, "http_cache"), cacheSize)
+
+    return OkHttpClient.Builder()
+        .cache(cache)
+        .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
+        .build()
+}
+
+private fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
+    val contentType = "application/json".toMediaType()
+    return Retrofit.Builder()
+        .baseUrl("https://rss.marketingtools.apple.com/")
+        .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory(contentType))
+        .build()
+}
+
+private fun provideAppleApi(retrofit: Retrofit): AppleMusicApi {
+    return retrofit.create(AppleMusicApi::class.java)
 }

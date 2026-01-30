@@ -31,6 +31,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.formakidov.challenge1.data.model.Album
+import com.formakidov.challenge1.ui.theme.AlbumItemBorderColor
+import com.formakidov.challenge1.ui.theme.AlbumItemShadowColor1
+import com.formakidov.challenge1.ui.theme.AlbumItemShadowColor2
+import com.formakidov.challenge1.ui.theme.ArrowIconBackground
+import com.formakidov.challenge1.ui.theme.SectionTabTextUnselected
 import com.formakidov.challenge1.ui.theme.Typography
 
 @Composable
@@ -45,20 +50,20 @@ fun AlbumItem(
             .fillMaxWidth()
             .shadow(
                 elevation = 6.dp,
-                spotColor = Color(0x0F424242),
-                ambientColor = Color(0x0F424242),
+                spotColor = AlbumItemShadowColor1,
+                ambientColor = AlbumItemShadowColor1,
                 shape = RoundedCornerShape(20.dp)
             )
             .shadow(
                 elevation = 2.dp,
-                spotColor = Color(0x0F525252),
-                ambientColor = Color(0x0F525252),
+                spotColor = AlbumItemShadowColor2,
+                ambientColor = AlbumItemShadowColor2,
                 shape = RoundedCornerShape(20.dp)
             )
-            .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 20.dp))
+            .background(color = Color.White, shape = RoundedCornerShape(size = 20.dp))
             .border(
                 width = 1.dp,
-                color = Color(0xFFE5E5E5),
+                color = AlbumItemBorderColor,
                 shape = RoundedCornerShape(size = 20.dp)
             )
             .clickable { onItemClick(album) }
@@ -129,7 +134,7 @@ private fun AlbumItemContent(
 @Composable
 private fun ArrowIcon() {
     Surface(
-        color = Color(0xFFF2F2F7),
+        color = ArrowIconBackground,
         shape = CircleShape,
         modifier = Modifier.size(28.dp)
     ) {
@@ -137,7 +142,7 @@ private fun ArrowIcon() {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = Color(0xFF8E8E93),
+                tint = SectionTabTextUnselected,
                 modifier = Modifier.size(20.dp)
             )
         }

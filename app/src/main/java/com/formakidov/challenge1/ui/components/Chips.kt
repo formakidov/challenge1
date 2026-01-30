@@ -24,7 +24,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.formakidov.challenge1.ui.theme.ChipBorderColor
+import com.formakidov.challenge1.ui.theme.GenreChipBackgroundColor
+import com.formakidov.challenge1.ui.theme.GenreChipBorderColor
+import com.formakidov.challenge1.ui.theme.GenreChipContentColor
+import com.formakidov.challenge1.ui.theme.SavedChipBackgroundColor
+import com.formakidov.challenge1.ui.theme.SavedChipContentColor
 import com.formakidov.challenge1.ui.theme.Typography
+import com.formakidov.challenge1.ui.theme.UnsavedChipBackgroundColor
+import com.formakidov.challenge1.ui.theme.UnsavedChipContentColor
 
 
 @Composable
@@ -32,9 +40,9 @@ fun GenreChip(text: String) {
     Chip(
         text = text,
         icon = Icons.Default.MusicNote,
-        backgroundColor = Color(0xFFDFF3FC),
-        borderColor = Color(0xFFC8E7F0),
-        contentColor = Color(0xFF389EC5)
+        backgroundColor = GenreChipBackgroundColor,
+        borderColor = GenreChipBorderColor,
+        contentColor = GenreChipContentColor
     )
 }
 
@@ -44,18 +52,18 @@ fun SaveChip(isSaved: Boolean, onClick: () -> Unit) {
         Chip(
             text = "Saved",
             icon = Icons.Default.Favorite,
-            backgroundColor = Color(0xFFDDF7E4),
-            borderColor = Color(0xFFD9E0E3),
-            contentColor = Color(0xFF31CA57),
+            backgroundColor = SavedChipBackgroundColor,
+            borderColor = ChipBorderColor,
+            contentColor = SavedChipContentColor,
             onClick = onClick
         )
     } else {
         Chip(
             text = "Add",
             icon = Icons.Default.FavoriteBorder,
-            backgroundColor = Color(0xFFE8EFF1),
-            borderColor = Color(0xFFD9E0E3),
-            contentColor = Color(0xFF414B57),
+            backgroundColor = UnsavedChipBackgroundColor,
+            borderColor = ChipBorderColor,
+            contentColor = UnsavedChipContentColor,
             onClick = onClick
         )
     }
